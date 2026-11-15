@@ -1,9 +1,9 @@
-# MD
+# `md`
 
 > [!WARNING]
-> MD is under active development; features and interfaces may change.
+> `md` is under active development; features and interfaces may change.
 
-MD is a blazing-fast, Rust-powered toolkit for parsing, linting, and formatting Markdown content.
+`md` is a blazing-fast, Rust-powered toolkit for parsing, linting, and formatting Markdown content.
 
 ## Project structure
 
