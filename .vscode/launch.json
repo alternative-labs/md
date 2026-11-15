@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug parser integration test",
+            "type": "lldb",
+            "request": "launch",
+            "cargo": {
+                "args": [
+                    "test",
+                    "-p",
+                    "md-parser",
+                    "--test",
+                    "parser_parse",
+                    "--no-run"
+                ],
+                "filter": {
+                    "name": "parser_parse",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "env": {}
+        }
+    ]
+}
