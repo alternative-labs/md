@@ -5,7 +5,7 @@ use crate::token::ListToken;
 pub(crate) struct ListScanner;
 
 impl TokenScanner<ListToken> for ListScanner {
-    fn scan(cursor: &Cursor<'_>) -> Outcome<ListToken> {
+    fn run(cursor: &Cursor<'_>) -> Outcome<ListToken> {
         let mut local_cursor = cursor.clone();
         let span_start = local_cursor.position();
 
@@ -61,7 +61,7 @@ mod tests {
         for source in ["- item", "* item", "+ item"] {
             let cursor = Cursor::new(source);
 
-            match ListScanner::scan(&cursor) {
+            match ListScanner::run(&cursor) {
                 Outcome::Accept(scanned) => assert_eq!(scanned.span, 0..2),
                 Outcome::Reject => panic!("expected {source:?} to be accepted"),
             }
@@ -75,7 +75,7 @@ mod tests {
         let source = "1. item";
         let cursor = Cursor::new(source);
 
-        match ListScanner::scan(&cursor) {
+        match ListScanner::run(&cursor) {
             Outcome::Accept(scanned) => assert_eq!(scanned.span, 0..3),
             Outcome::Reject => panic!("expected {source:?} to be accepted"),
         }
@@ -88,7 +88,7 @@ mod tests {
         for (source, marker_len) in [("10. item", 4), ("42) item", 4), ("123.\titem", 5)] {
             let cursor = Cursor::new(source);
 
-            match ListScanner::scan(&cursor) {
+            match ListScanner::run(&cursor) {
                 Outcome::Accept(scanned) => assert_eq!(scanned.span, 0..marker_len),
                 Outcome::Reject => panic!("expected {source:?} to be accepted"),
             }
@@ -101,7 +101,7 @@ mod tests {
     fn rejects_non_list_markers() {
         for source in ["text", "-item", "1 item", "1a. item", "a. item"] {
             assert!(
-                matches!(ListScanner::scan(&Cursor::new(source)), Outcome::Reject),
+                matches!(ListScanner::run(&Cursor::new(source)), Outcome::Reject),
                 "expected {source:?} to be rejected"
             );
         }

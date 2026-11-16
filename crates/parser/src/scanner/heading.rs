@@ -4,7 +4,7 @@ use crate::token::HeadingToken;
 
 pub(crate) struct HeadingScanner;
 impl TokenScanner<HeadingToken> for HeadingScanner {
-    fn scan(cursor: &Cursor) -> Outcome<HeadingToken> {
+    fn run(cursor: &Cursor) -> Outcome<HeadingToken> {
         let mut cursor: Cursor<'_> = cursor.clone();
         let span_start: usize = cursor.position();
 
@@ -49,7 +49,7 @@ mod tests {
             let source = format!("{} title", "#".repeat(usize::from(level)));
             let cursor = Cursor::new(&source);
 
-            match HeadingScanner::scan(&cursor) {
+            match HeadingScanner::run(&cursor) {
                 Outcome::Accept(scanned) => {
                     assert_eq!(scanned.token.level, level);
                     assert_eq!(scanned.span, 0..usize::from(level) + 1);
@@ -66,7 +66,7 @@ mod tests {
         let source = "# title with 🦀";
         let cursor = Cursor::new(source);
 
-        match HeadingScanner::scan(&cursor) {
+        match HeadingScanner::run(&cursor) {
             Outcome::Accept(scanned) => {
                 assert_eq!(scanned.token.level, 1);
                 assert_eq!(scanned.span, 0..2);
@@ -79,7 +79,7 @@ mod tests {
     fn rejects_invalid_heading_prefixes() {
         for source in ["text", "#heading", "#\ttab", "####### too many"] {
             assert!(
-                matches!(HeadingScanner::scan(&Cursor::new(source)), Outcome::Reject),
+                matches!(HeadingScanner::run(&Cursor::new(source)), Outcome::Reject),
                 "expected {source:?} to be rejected"
             );
         }

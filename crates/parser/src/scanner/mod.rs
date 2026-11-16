@@ -22,7 +22,7 @@ pub(crate) struct Scanned<T> {
 }
 
 pub(crate) trait TokenScanner<T> {
-    fn scan(cursor: &Cursor<'_>) -> Outcome<T>;
+    fn run(cursor: &Cursor<'_>) -> Outcome<T>;
 }
 
 use crate::cursor::Cursor;

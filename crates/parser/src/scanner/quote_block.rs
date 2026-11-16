@@ -4,7 +4,7 @@ use crate::token::QuoteBlockToken;
 
 pub(crate) struct QuoteBlockScanner;
 impl TokenScanner<QuoteBlockToken> for QuoteBlockScanner {
-    fn scan(cursor: &Cursor<'_>) -> Outcome<QuoteBlockToken> {
+    fn run(cursor: &Cursor<'_>) -> Outcome<QuoteBlockToken> {
         let mut local_cursor = cursor.clone();
         let span_start = cursor.position();
 
@@ -29,7 +29,7 @@ mod tests {
     fn scans_quote_marker_without_consuming_the_source_cursor() {
         let cursor = Cursor::new("> quote");
 
-        match QuoteBlockScanner::scan(&cursor) {
+        match QuoteBlockScanner::run(&cursor) {
             Outcome::Accept(scanned) => assert_eq!(scanned.span, 0..1),
             Outcome::Reject => panic!("expected a quote marker to be accepted"),
         }
@@ -40,7 +40,7 @@ mod tests {
     #[test]
     fn rejects_non_quote_characters() {
         assert!(matches!(
-            QuoteBlockScanner::scan(&Cursor::new("text")),
+            QuoteBlockScanner::run(&Cursor::new("text")),
             Outcome::Reject
         ));
     }
