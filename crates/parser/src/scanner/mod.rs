@@ -1,5 +1,6 @@
 use std::ops::Range;
 
+mod block;
 mod heading;
 mod list;
 mod newline;
