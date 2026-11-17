@@ -1,3 +1,7 @@
+/**
+ * Scanners recognize token prefixes at the cursor and report their spans
+ * without consuming input.
+ */
 use std::ops::Range;
 
 mod heading;

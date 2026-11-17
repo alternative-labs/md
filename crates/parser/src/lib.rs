@@ -1,6 +1,6 @@
-mod block;
 mod cursor;
-mod scanner;
+mod scanners;
+mod state;
 mod token;
 
 pub mod parser;

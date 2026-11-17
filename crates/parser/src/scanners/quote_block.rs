@@ -1,5 +1,5 @@
 use crate::cursor::Cursor;
-use crate::scanner::{Outcome, Scanned, TokenScanner};
+use crate::scanners::{Outcome, Scanned, TokenScanner};
 use crate::token::QuoteBlockToken;
 
 pub(crate) struct QuoteBlockScanner;

@@ -7,13 +7,14 @@
 ####### Not a header
 #Not a header
 
-We are using _Rust_ to tokenize, parse *Markdown* AST
+We are using _Rust_ to tokenize, parse *Mark**down*** AST
 And this is supposed to be a single paragraph block.
 
 But this one is **NEW BLOCK**.\r\nAnd it continues\rSpanning for three lines.
 
 > Quote block  
-> can span  
+> > can ```span```
+>
 > multiple lines
 
 ```js
